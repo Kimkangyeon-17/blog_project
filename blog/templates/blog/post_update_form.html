@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eidt</title>
+</head>
+<body>
+    <h1>Edit</h1>
+    <hr>
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <button type="submit"> Submit </button>
+    </form>
+</body>
+</html>
