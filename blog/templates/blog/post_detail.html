@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>{{ post.title }} - Blog</title>
     <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}">
+    <script src="https://kit.fontawesome.com/5584f13f2e.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -55,6 +56,24 @@
         </div>
     </div>
 </article>
+{% if post.file_upload %}
+<a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>
+    Download :
+    {% if post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+    <i class="fa-regular fa-file-excel"></i>
+    {% elif post.get_file_ext == 'csv' %}
+    <i class="fa-solid fa-file-csv"></i>
+    {% elif post.get_file_ext == 'docx' %}
+    <i class="fa-regular fa-file-word"></i>
+    {% elif post.get_file_ext == 'pdf' %}
+    <i class="fa-regular fa-file-pdf"></i>
+    {% else %}
+    <i class="fa-regular fa-file-lines"></i>
+    {% endif %}
+
+    {{ post.get_file_name }}
+</a>
+{% endif %}
 <!-- Footer-->
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
