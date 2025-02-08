@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Delete Post</title>
+</head>
+<body>
+    <h1>Delete Post</h1>
+    <p>게시물 "{{ object }}" 를 삭제하시겠습니까?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>
