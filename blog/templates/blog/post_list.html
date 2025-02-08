@@ -3,7 +3,7 @@
 {% block main_area %}
     {% if user.is_authenticated %}
         {% if user.is_superuser or user.is_staff %}
-        <a type="button" href="/blog/create_post/" class="btn btn-outline-info btn-sm float-end"><i class="fa-solid fa-pen"></i> New Post </a>
+        <a type="button" href="/blog/create_post/" class="btn btn-outline-dark btn-sm float-end"><i class="fa-solid fa-pen"></i> New Post </a>
         {% endif %}
     {% endif %}
 <h1>
@@ -32,7 +32,7 @@
                                 by {{ p.author|upper }}
                                 </div>
                                 <p class="card-text">{{ p.content|truncatewords:30 }}</p>
-                                <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Read more →</a>
+                                <a class="btn btn-dark text-white" href="{{ p.get_absolute_url }}">Read more →</a>
                             </div>
                         </div>
                     </div>
