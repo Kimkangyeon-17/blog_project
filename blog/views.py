@@ -1,13 +1,20 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Post
+from .models import Post, Category
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 
 class PostList(ListView):
     model = Post
     ordering = '-pk'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostList, self).get_context_data()
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        return context
+
 
 class PostDetail(DetailView):
     model = Post
@@ -44,3 +51,22 @@ class PostDelete(DeleteView):
     model = Post
     template_name = "blog/post_confirm_delete.html"
     success_url = reverse_lazy("post_list")
+
+def category_page(request, slug):
+    if slug == 'no_category':
+        category = '미분류'
+        post_list = Post.objects.filter(category=None)
+    else:
+        category = Category.objects.get(slug=slug)
+        post_list = Post.objects.filter(category=category)
+
+    return render(
+        request,
+        'blog/post_list.html',
+{
+    'post_list' : post_list,
+    'categories' : Category.objects.all(),
+    'no_category_post_count' : Post.objects.filter(category=None).count(),
+    'category' : category,
+        }
+    )
