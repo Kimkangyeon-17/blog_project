@@ -22,7 +22,9 @@
             <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
 
             <!-- Post content-->
-            <div class="text-muted fst-italic mb-2">Posted on {{ post.created_at}} by <a href="#">{{ post.author | upper }}</a> </div>
+            <div class="text-muted fst-italic mb-2">Posted on {{ post.created_at}} by
+                <img class="mr-1 rounded-circle" src="{{ post.get_avatar_url }}" width="25px" alt="{{ post.author }}">
+                <a href="#">{{ post.author | upper }}</a> </div>
 
             {% if user.is_authenticated and user == post.author %}
                 <a type="button" href="/blog/update_post/{{ post.pk }}" class="btn btn-outline-dark btn-sm float-end"><i class="fa-solid fa-pen"></i> Edit Post </a>

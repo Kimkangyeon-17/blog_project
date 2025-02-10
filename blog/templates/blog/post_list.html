@@ -31,7 +31,9 @@
                             <div class="card-body">
                                 <h2 class="card-title h4">{{ p.title }}</h2>
                                 <div class="small text-muted">Posted on {{ p.created_at|date:"F j, Y" }}
-                                by {{ p.author|upper }}
+                                by
+                                    <img class="mr-1 rounded-circle" src="{{ p.get_avatar_url }}" width="25px" alt="{{ post.author }}">
+                                    {{ p.author|upper }}
                                 </div>
                                 <p class="card-text">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
                                 <a class="btn btn-dark text-white" href="{{ p.get_absolute_url }}">Read more →</a>
