@@ -1,56 +1,57 @@
 {% extends 'blog/base.html' %}
 
 {% block main_area %}
-    {% if user.is_authenticated %}
-        {% if user.is_superuser or user.is_staff %}
-        <a type="button" href="/blog/create_post/" class="btn btn-outline-dark btn-sm float-end"><i class="fa-solid fa-pen"></i> New Post </a>
-        {% endif %}
-    {% endif %}
+{% if user.is_authenticated %}
+{% if user.is_superuser or user.is_staff %}
+<a type="button" href="/blog/create_post/" class="btn btn-outline-dark btn-sm float-end"><i class="fa-solid fa-pen"></i> New Post </a>
+{% endif %}
+{% endif %}
 <h1>
     Blog
     {% if search_info %} <small class="text-muted"> {{ search_info }} </small> {% endif %}
     {% if category %}
-        <h4><span class="badge rounded-pill text-bg-dark float-end">{{ category }}</span></h4>
+    <h4><span class="badge rounded-pill text-bg-dark float-end">{{ category }}</span></h4>
     {% endif %}
     <br>
     <br>
 </h1>
 {% if post_list.exists %}
-    <div class="container">
-            <div class="row">
-                {% for p in post_list %}
-                    <div class="col-md-6 mb-4">
-                        <div class="card h-100">
-                                <a href="{{ p.get_absolute_url }}">
-                                    {% if p.head_image %}
-                                    <a href="#!"><img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p.title }}" style="width: 100%; height: 350px; object-fit: cover;" /></a>
-                                    {% else %}
-                                    <a href="#!"><img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/200/300" alt="{{ p.title }}" style="width: 100%; height: 350px; margin: 0 auto; display: block;"/></a>
-                                    {% endif %}
-                                </a>
-                            <div class="card-body">
-                                <h2 class="card-title h4">{{ p.title }}</h2>
-                                <div class="small text-muted">Posted on {{ p.created_at|date:"F j, Y" }}
-                                by
-                                    <img class="mr-1 rounded-circle" src="{{ p.get_avatar_url }}" width="25px" alt="{{ post.author }}">
-                                    {{ p.author|upper }}
-                                </div>
-                                <p class="card-text">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
-                                <a class="btn btn-dark text-white" href="{{ p.get_absolute_url }}">Read more →</a>
-                            </div>
-                        </div>
+<div class="container">
+    <div class="row">
+        {% for p in post_list %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="{{ p.get_absolute_url }}">
+                    {% if p.head_image %}
+                    <a href="#!"><img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p.title }}" style="width: 100%; height: 350px; object-fit: cover;" /></a>
+                    {% else %}
+                    <a href="#!"><img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/200/300" alt="{{ p.title }}" style="width: 100%; height: 350px; margin: 0 auto; display: block;"/></a>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <h2 class="card-title h4">{{ p.title }}</h2>
+                    <div class="small text-muted">Posted on {{ p.created_at|date:"F j, Y" }}
+                        by
+                        <img class="mr-1 rounded-circle" src="{{ p.get_avatar_url }}" width="25px" alt="{{ post.author }}">
+                        {{ p.author|upper }}
                     </div>
-                {% endfor %}
+                    <p class="card-text">{{ p.get_content_markdown | truncatewords_html:45 | safe }}</p>
+                    <a class="btn btn-dark text-white" href="{{ p.get_absolute_url }}">Read more →</a>
+                </div>
             </div>
+        </div>
+        {% endfor %}
     </div>
+</div>
 
 {% else %}
 <h1>아직 게시물이 없습니다.</h1>
 {% endif %}
 
-    {% if is_paginated %}
-    <!-- Pagination -->
-    <div class="row">
+{% if is_paginated %}
+<!-- Pagination -->
+<div class="container">
+    <div class="row justify-content-center">
         <div class="col-lg-8">
             <nav aria-label="Pagination">
                 <hr class="my-0" />
@@ -67,17 +68,18 @@
 
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Newer &rarr;-> </a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Newer -></a>
                     </li>
                     {% else %}
                     <li class="page-item disabled">
-                        <a class="page-link" href="#">Newer &rarr;-> </a>
+                        <a class="page-link" href="#">Newer -></a>
                     </li>
                     {% endif %}
                 </ul>
             </nav>
         </div>
     </div>
-    {% endif %}
+</div>
+{% endif %}
 
 {% endblock %}

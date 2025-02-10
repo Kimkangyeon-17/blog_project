@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Category, Comment
 from django.urls import reverse_lazy
@@ -72,13 +72,25 @@ class PostSearch(PostList):
 
         return context
 
-# class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-#     model = Post
-#     template_name = "blog/post_confirm_delete.html"
-#     success_url = reverse_lazy("post_list")
-#
-#     def test_func(self):
-#         return self.request.user == self.get_object().author
+class PostDelete(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=kwargs['pk'])  # Comment -> Post로 변경
+
+        if request.user == post.author:
+            post.delete()
+            # 삭제 후 메시지를 보여주는 템플릿으로 이동
+            return render(request, 'blog/post_confirm_delete.html')
+        else:
+            raise PermissionDenied
+
+    def get(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=kwargs['pk'])  # Comment -> Post로 변경
+        if request.user == post.author:
+            post.delete()
+            # 삭제 후 메시지를 보여주는 템플릿으로 이동
+            return render(request, 'blog/post_confirm_delete.html')
+        else:
+            raise PermissionDenied
 
 def category_page(request, slug):
     if slug == 'no_category':
@@ -121,7 +133,6 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
             raise PermissionDenied
 
 
-from django.views.generic import View
 
 
 class CommentDelete(LoginRequiredMixin, View):
@@ -141,25 +152,5 @@ class CommentDelete(LoginRequiredMixin, View):
             post_url = comment.post.get_absolute_url()
             comment.delete()
             return redirect(post_url)
-        else:
-            raise PermissionDenied
-
-class PostDelete(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=kwargs['pk'])  # Comment -> Post로 변경
-
-        if request.user == post.author:
-            post.delete()
-            # 삭제 후 메시지를 보여주는 템플릿으로 이동
-            return render(request, 'blog/post_confirm_delete.html')
-        else:
-            raise PermissionDenied
-
-    def get(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk=kwargs['pk'])  # Comment -> Post로 변경
-        if request.user == post.author:
-            post.delete()
-            # 삭제 후 메시지를 보여주는 템플릿으로 이동
-            return render(request, 'blog/post_confirm_delete.html')
         else:
             raise PermissionDenied

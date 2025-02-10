@@ -33,6 +33,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
 
+    hit = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return f'[{self.pk}]{self.title} :: {self.author}'
 
@@ -48,13 +50,17 @@ class Post(models.Model):
     def get_content_markdown(self):
         return markdown(self.content)
 
-
     def get_avatar_url(self):
         if self.author.socialaccount_set.exists():
             return self.author.socialaccount_set.first().get_avatar_url()
         else:
             return f'https://doitdjango.com/avatar/id/2636/fda31ee6d2cdedae/svg/{self.author.email}/'
 
+    @property
+    def update_counter(self):
+        self.hit = self.hit + 1
+        self.save()
+        return self.hit
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
