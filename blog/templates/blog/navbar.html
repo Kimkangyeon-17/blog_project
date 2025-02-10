@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand text-white" href="/" white >Blog</a>
@@ -10,11 +11,58 @@
           <a class="nav-link active text-white" aria-current="page" href="/blog/">Home</a>
         </li>
       </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/accounts/login">Login</a>
-        </li>
-      </ul>
+
+        <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if user.socialaccount_set.first.get_avatar_url  %}
+                    <img class="rounded-circle" width="25px"
+                         src="{{ user.socialaccount_set.first.get_avatar_url  }}"
+                         alt="{{ user.username }}">
+                    {% else %}
+                    <img class="rounded-circle" width="25px"
+                         src="https://doitdjango.com/avatar/id/2636/fda31ee6d2cdedae/svg/{{ user.email }}/"
+                         alt="{{ user.username }}">
+                    {% endif %}
+                    &nbsp;
+                    {{ user.username }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/accounts/logout/">Log Out</a></li>
+                </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#LoginModal" class="text-white">Log In</a>
+            </li>
+            {% endif %}
+        </ul>
+
     </div>
   </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModalLabel"><i class="fa-solid fa-right-to-bracket"></i>Log In</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="d-grid gap-2">
+                        <a role="button" href="{% provider_login_url 'google' %}" type="button" class="btn btn-outline-dark"><i class="fa-brands fa-google"></i> Log In With Google</a>
+                        <a role="button" href="/accounts/login/" class="btn btn-outline-dark"><i class="fa-regular fa-user"></i> Log In With User Name</a>
+                        <a role="button" href="/accounts/signup/" type="button" class="btn btn-outline-dark"><i class="fa-regular fa-envelope"></i> Sign Up With E-mail</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
