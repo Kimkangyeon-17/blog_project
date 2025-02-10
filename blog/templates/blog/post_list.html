@@ -8,11 +8,11 @@
     {% endif %}
 <h1>
     Blog
-    <br>
     {% if search_info %} <small class="text-muted"> {{ search_info }} </small> {% endif %}
     {% if category %}
-        <span class="badge text-bg-secondary ">{{ category }}</span>
+        <h4><span class="badge rounded-pill text-bg-dark float-end">{{ category }}</span></h4>
     {% endif %}
+    <br>
     <br>
 </h1>
 {% if post_list.exists %}

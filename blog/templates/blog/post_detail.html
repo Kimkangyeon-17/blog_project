@@ -65,6 +65,24 @@
     </article>
     <hr>
 </div>
+
+<div id="comment-area">
+    <!-- comment form   -->
+    <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+            {% if user.is_authenticated %}
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% else %}
+                <a role="button" type="button" class="btn btn-outline-dark w-100" href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">Log In and Leave a Comment</a>
+            {% endif %}
+        </div>
+    </div>
 {% if post.comment_set.exists %}
     {% for comment in post.comment_set.iterator %}
     <div class="media mb-4" id="comment-{{ comment.pk }}">
@@ -75,5 +93,9 @@
     </div>
     {% endfor %}
 {% endif %}
+
+</div>
+
+
 
 {% endblock %}
