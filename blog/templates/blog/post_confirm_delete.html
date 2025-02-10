@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>Delete Post</title>
-</head>
-<body>
-    <h1>Delete Post</h1>
-    <p>게시물 "{{ object }}" 를 삭제하시겠습니까?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Delete</button>
-    </form>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+
+{% block main_area %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">존재하지 않는 게시글입니다</h4>
+                <hr>
+                <a href="/blog/" class="btn btn-primary">글 목록으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
