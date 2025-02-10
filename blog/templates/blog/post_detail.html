@@ -39,7 +39,7 @@
         {% endif %}
         <!-- Post content-->
         <section class="mb-5">
-            <p> {{ post.content }} </p>
+            <p> {{ post.get_content_markdown | safe }} </p>
         </section>
 
 
@@ -65,5 +65,15 @@
     </article>
     <hr>
 </div>
+{% if post.comment_set.exists %}
+    {% for comment in post.comment_set.iterator %}
+    <div class="media mb-4" id="comment-{{ comment.pk }}">
+        <div class="media-body">
+            <h5>{{ comment.author.username }} &nbsp;&nbsp; <small class="text-muted">{{ comment.created_at }}</small></h5>
+            {{ comment.content | linebreaks }}
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
 
 {% endblock %}
