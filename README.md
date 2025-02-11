@@ -111,6 +111,46 @@
 | POST | /accounts/logout/ | 로그아웃 |
 
 ## 📁 프로젝트 파일 구조
+```bash
+📁 blog_project
+├─📁accounts
+│  ├─migrations
+│  │  └─__pycache__
+│  ├─📁templates
+│  │   └─📁accounts
+│  └─__pycache__
+├─📁blog
+│  ├─migrations
+│  │  └─__pycache__
+│  ├─📁static
+│  │  └─📁blog
+│  │       ├─📁bootstrap
+│  │       │   ├─css
+│  │       │   └─js
+│  │       └─css
+│  ├─📁templates
+│  │   └─📁blog
+│  └─__pycache__
+├─📁config
+│   └─__pycache__
+├─📁home_page
+│   ├─📁static
+│   │   └─📁home_page
+│   │        ├─css
+│   │        └─images
+│   ├─📁templates
+│   │   └─📁home_page
+│   └─__pycache__
+├─📁media
+│   └─📁blog
+│        ├─ 📁files
+│        └─ 📁image
+├─📁venv
+│
+├─ 📄README.md
+│
+└─📄requirements.txt
+```
 
 ## ERD
 ![ERD](https://github.com/user-attachments/assets/89b08bd4-8fb4-4923-b74c-40054e44fae0)
