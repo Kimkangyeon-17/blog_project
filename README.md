@@ -113,6 +113,7 @@
 ## 📁 프로젝트 파일 구조
 
 ## ERD
+![ERD](https://github.com/user-attachments/assets/89b08bd4-8fb4-4923-b74c-40054e44fae0)
 
 
 
